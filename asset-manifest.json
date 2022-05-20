@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/softlex/static/css/main.7053fea7.css",
+    "main.js": "/softlex/static/js/main.67d67daa.js",
+    "index.html": "/softlex/index.html",
+    "main.7053fea7.css.map": "/softlex/static/css/main.7053fea7.css.map",
+    "main.67d67daa.js.map": "/softlex/static/js/main.67d67daa.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7053fea7.css",
+    "static/js/main.67d67daa.js"
+  ]
+}
