@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Data, SortDir, SortField } from '../interfaces/interfaces'
+import { Info, SortDir, SortField } from '../interfaces/interfaces'
 
-interface DataState extends Data {
+interface DataState extends Info {
   current_page: number,
   sort_field: SortField | undefined,
   sort_dir: SortDir | undefined,
@@ -23,7 +23,7 @@ export const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    setData: (state, action: PayloadAction<Data>) => {
+    setData: (state, action: PayloadAction<Info>) => {
       state.tasks = action.payload.tasks;
       state.total_task_count = action.payload.total_task_count;
     },

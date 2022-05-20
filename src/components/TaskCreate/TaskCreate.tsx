@@ -15,6 +15,11 @@ const TaskCreate = (props: {developer: string}) => {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
+  const refreshData = () => {
+    getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
+    .then((res) => dispatch(setData(res)))
+  }
+
   const onChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
   }
@@ -46,8 +51,7 @@ const TaskCreate = (props: {developer: string}) => {
     }
     
     postTask({developer: props.developer, username, email, text })
-    .then(()=> getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
-    .then((res) => dispatch(setData(res))))
+    .then(refreshData)
 
     setUsername('');
     setEmail('');

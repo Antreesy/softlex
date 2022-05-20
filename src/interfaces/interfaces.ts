@@ -17,7 +17,7 @@ export interface QueryParams {
   page?: number;
 }
 
-export interface TaskData {
+export interface TaskInfo {
   email: string;
   id: number;
   image_path: string;
@@ -26,7 +26,7 @@ export interface TaskData {
   username: string;
 }
 
-export interface Data {
-  tasks: TaskData[];
+export interface Info {
+  tasks: TaskInfo[];
   total_task_count: string; 
 }

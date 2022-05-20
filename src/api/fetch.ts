@@ -1,6 +1,6 @@
-import { Data, QueryParams } from "../interfaces/interfaces";
+import { Info, QueryParams } from "../interfaces/interfaces";
 
-export const getData = async (payload: QueryParams): Promise<Data> => {
+export const getData = async (payload: QueryParams): Promise<Info> => {
   const homeAddress = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
   const devQuery = `?developer=${payload.developer}`;
   const sortParamQuery = `&sort_field=${payload.sort_field}` || '';

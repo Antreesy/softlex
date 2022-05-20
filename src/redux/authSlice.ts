@@ -2,13 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface AuthState {
   username: string,
-  password: string,
   token: string,
 }
 
 const initialState: AuthState = {
   username: localStorage.getItem('username') || '',
-  password: '',
   token: localStorage.getItem('token') || '',
 }
 
@@ -24,17 +22,15 @@ export const authSlice = createSlice({
       state.username = action.payload;
       localStorage.setItem('username', action.payload )
     },
-    setPass: (state, action: PayloadAction<string>) => {
-      state.password = action.payload;
-    },
     resetToken: (state) => {
       state.token = '';
+      state.username = '';
       localStorage.removeItem('token')
       localStorage.removeItem('username')
     },
   },
 })
 
-export const { setToken, setUser, setPass, resetToken } = authSlice.actions
+export const { setToken, setUser, resetToken } = authSlice.actions
 
 export default authSlice.reducer

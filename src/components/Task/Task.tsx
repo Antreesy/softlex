@@ -4,12 +4,12 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 import { getData, patchTask } from '../../api/fetch';
 
-import { TaskData } from '../../interfaces/interfaces';
+import { TaskInfo } from '../../interfaces/interfaces';
 
 import classNames from 'classnames';
 import style from "./task.module.css";
 
-const Task = (props: {data: TaskData}) => {
+const Task = (props: {data: TaskInfo}) => {
   const { email, id, image_path, status, text, username } = props.data;
   const data = useAppSelector((state) => state.data);
   const auth = useAppSelector((state) => state.auth);
@@ -21,6 +21,11 @@ const Task = (props: {data: TaskData}) => {
   const isModify = data.modifiedId === id;
   const isDone = ((checked === 10) || (checked === 11))
   const isEdited = ((checked === 1) || (checked === 11))
+
+  const refreshData = () => {
+    getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
+    .then((res) => dispatch(setData(res)))
+  }
 
   const checkedClass = classNames(style.status, {[style.checked]: isDone})
 
@@ -57,8 +62,7 @@ const Task = (props: {data: TaskData}) => {
     setChecked(newChecked);
 
     patchTask({id, developer: data.developerName, token: auth.token, text: textInput, status: newChecked })
-    .then(()=> getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
-    .then((res) => dispatch(setData(res))))
+    .then(refreshData)
   
     dispatch(resetModify())
   }

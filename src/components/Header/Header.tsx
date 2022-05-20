@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { setToken, setUser, setPass, resetToken } from "../../redux/authSlice";
+import { setToken, setUser, resetToken } from "../../redux/authSlice";
 
 import { authUser } from "../../api/fetch";
 
@@ -11,7 +11,7 @@ const Header = () => {
   const auth = useAppSelector((state) => state.auth);
   const data = useAppSelector((state) => state.data);
   const [username, setUsername] = useState<string>(auth.username)
-  const [password, setPassword] = useState<string>(auth.password)
+  const [password, setPassword] = useState<string>('')
   const dispatch = useAppDispatch();
 
   const onChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +27,6 @@ const Header = () => {
     authUser({developer: data.developerName, username, password})
       .then((res) => dispatch(setToken(res.token)))
       dispatch(setUser(username))
-      dispatch(setPass(password))
   }
 
   const signOut = () => {
