@@ -9,7 +9,7 @@ import style from "./header.module.css";
 
 const Header = () => {
   const auth = useAppSelector((state) => state.auth);
-  const data = useAppSelector((state) => state.data);
+  const developerName = useAppSelector((state) => state.data.developerName);
   const [username, setUsername] = useState<string>(auth.username)
   const [password, setPassword] = useState<string>('')
   const dispatch = useAppDispatch();
@@ -24,7 +24,7 @@ const Header = () => {
   const signIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    authUser({developer: data.developerName, username, password})
+    authUser({developerName, username, password})
       .then((res) => dispatch(setToken(res.token)))
       dispatch(setUser(username))
   }

@@ -14,29 +14,30 @@ import style from "./main.module.css";
 function Main() {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.data);
+  const {developerName, current_page, sort_field, sort_dir} = useAppSelector((state) => state.data);
 
   useEffect(()=>{
-    getData({developer: data.developerName})
+    getData({developerName})
       .then((res) => dispatch(setData(res)))
   }, [])
 
   useEffect(()=>{
-    getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
+    getData({developerName, current_page, sort_field, sort_dir})
       .then((res) => dispatch(setData(res)))
-  },[data.current_page, data.sort_field, data.sort_dir])
+  },[current_page, sort_field, sort_dir])
 
   return (
     <main className={style.main}>
       <div className={style.container}>
-        {data && <Sort field={data.sort_field} direction={data.sort_dir}/>}
+        <Sort data={data}/>
 
-        {data && data?.tasks.map((item) => (
-          <Task key={item.id} data={item} />
+        {data?.tasks.map((item) => (
+          <Task key={item.id} data={data} info={item} />
         ))}
 
-        {data && <Pagination pages={data.total_task_count} currentPage={data.current_page} />}
+        <Pagination data={data}/>
 
-        <TaskCreate developer={data.developerName} />
+        <TaskCreate data={data} />
       </div>
     </main>
   );

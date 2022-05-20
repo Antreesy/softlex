@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
-import { setModify, resetModify, setData } from '../../redux/dataSlice';
+import { setData, DataState } from '../../redux/dataSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 import { getData, patchTask } from '../../api/fetch';
-
+import { parseStatus, parseStatusToDone, parseStatusToEdited } from '../../helpers/parser';
 import { TaskInfo } from '../../interfaces/interfaces';
 
 import classNames from 'classnames';
 import style from "./task.module.css";
 
-const Task = (props: {data: TaskInfo}) => {
-  const { email, id, image_path, status, text, username } = props.data;
-  const data = useAppSelector((state) => state.data);
-  const auth = useAppSelector((state) => state.auth);
+const Task = (props: {data: DataState, info: TaskInfo}) => {
+  const { email, id, image_path, status, text, username } = props.info;
+  const {developerName, current_page, sort_field, sort_dir } = props.data;
+  const token = useAppSelector((state) => state.auth.token);
+
   const [textInput, setTextInput] = useState<string>(text)
-  const [checked, setChecked] = useState<number>(status)
   const [error, setError] = useState<string>('')
+  const [isDone, setIsDone] = useState<boolean>(parseStatusToDone(status))
+  const [isEdited, setIsEdited] = useState<boolean>(parseStatusToEdited(status))
+  const [isModify, setIsModify] = useState<boolean>(false)
   const dispatch = useAppDispatch();
 
-  const isModify = data.modifiedId === id;
-  const isDone = ((checked === 10) || (checked === 11))
-  const isEdited = ((checked === 1) || (checked === 11))
-
   const refreshData = () => {
-    getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
+    getData({developerName, current_page, sort_field, sort_dir})
     .then((res) => dispatch(setData(res)))
   }
 
@@ -34,37 +33,28 @@ const Task = (props: {data: TaskInfo}) => {
   }
 
   const handleModify = () => {
-    dispatch(setModify(id))
+    setIsModify(true)
   }
 
-  const handleChecked = () => {
-    if (!isModify) return;
-
-    switch (checked) {
-      case 0: setChecked(10); break;
-      case 10: setChecked(0); break;
-      case 1: setChecked(11); break;
-      default: setChecked(1); break;
-    }
+  const toggleChecked = () => {
+    if (isModify) setIsDone(!isDone);
   }
 
   const handleSave = () => {
+    const newEdited = (text !== textInput) ? true : isEdited;
+
     if (!textInput.length) {
       setError('enter a text');
       return;
     }
 
-    let newChecked = checked;
-    if (text !== textInput) {
-      newChecked = (checked === 0 || checked === 10) ? checked + 1 : checked;
-    }
-    setError('');
-    setChecked(newChecked);
-
-    patchTask({id, developer: data.developerName, token: auth.token, text: textInput, status: newChecked })
+    patchTask({id, developerName, token, text: textInput, status: parseStatus(isDone, newEdited) })
     .then(refreshData)
   
-    dispatch(resetModify())
+    setIsEdited(newEdited);
+    setError('');
+
+    setIsModify(false)
   }
 
   return (
@@ -83,11 +73,11 @@ const Task = (props: {data: TaskInfo}) => {
 
       <span className={style.status_edited}>{isEdited ? 'edited' : ''}</span>
 
-      <button className={checkedClass} onClick={handleChecked} />
+      <button className={checkedClass} onClick={toggleChecked} />
 
       <div className={style.button_wrapper}>
-        {!!auth.token && !isModify && <button className={style.button_edit} onClick={handleModify}>Edit</button>}
-        {!!auth.token && isModify && <button className={style.button_save} onClick={handleSave}>Save</button>}
+        {!!token && !isModify && <button className={style.button_edit} onClick={handleModify}>Edit</button>}
+        {!!token && isModify && <button className={style.button_save} onClick={handleSave}>Save</button>}
         <span className={style.error}>{error}</span>
       </div>
     </div>

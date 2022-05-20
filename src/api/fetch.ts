@@ -1,23 +1,38 @@
-import { Info, QueryParams } from "../interfaces/interfaces";
+import { Info, SortDir, SortField } from "../interfaces/interfaces";
 
-export const getData = async (payload: QueryParams): Promise<Info> => {
-  const homeAddress = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
-  const devQuery = `?developer=${payload.developer}`;
+const address = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
+
+export interface GetDataPayload {
+  developerName: string;
+  sort_field?: SortField;
+  sort_dir?: SortDir;
+  current_page?: number;
+}
+
+export const getData = async (payload: GetDataPayload): Promise<Info> => {
+  const endpoint = address + ''
+  const devQuery = `?developer=${payload.developerName}`;
   const sortParamQuery = `&sort_field=${payload.sort_field}` || '';
-  const sortDirectQuery = `&sort_direction=${payload.sort_direction}` || '';
-  const sortPageQuery = `&page=${payload.page}` || '';
+  const sortDirectQuery = `&sort_direction=${payload.sort_dir}` || '';
+  const sortPageQuery = `&page=${payload.current_page}` || '';
 
-  const finalAddress = homeAddress + devQuery + sortParamQuery + sortDirectQuery + sortPageQuery;
+  const finalAddress = endpoint + devQuery + sortParamQuery + sortDirectQuery + sortPageQuery;
 
   const res = await fetch(finalAddress).then((res) => res.json())
   
   return res.message;
 }
 
-export const authUser = async (payload: {developer: string, username: string, password: string}): Promise<{token: string}> => {
-  const homeAddress = 'https://uxcandy.com/~shapoval/test-task-backend/v2/login/'
-  const devQuery = `?developer=${payload.developer}`;
-  const finalAddress = homeAddress + devQuery;
+interface AuthUserPayload {
+  developerName: string,
+  username: string,
+  password: string,
+}
+
+export const authUser = async (payload: AuthUserPayload): Promise<{token: string}> => {
+  const endpoint = address + 'login/'
+  const devQuery = `?developer=${payload.developerName}`;
+  const finalAddress = endpoint + devQuery;
 
   const form = new FormData();
   form.append("username", payload.username);
@@ -33,10 +48,17 @@ export const authUser = async (payload: {developer: string, username: string, pa
   return res.message;
 }
 
-export const postTask = async (payload: {developer: string, username: string, email: string, text: string}): Promise<{token: string}> => {
-  const homeAddress = 'https://uxcandy.com/~shapoval/test-task-backend/v2/create/'
-  const devQuery = `?developer=${payload.developer}`;
-  const finalAddress = homeAddress + devQuery;
+interface PostTaskPayload {
+  developerName: string,
+  username: string,
+  email: string,
+  text: string,
+}
+
+export const postTask = async (payload: PostTaskPayload): Promise<any> => {
+  const endpoint = address + 'create/'
+  const devQuery = `?developer=${payload.developerName}`;
+  const finalAddress = endpoint + devQuery;
 
   const form = new FormData();
   form.append("username", payload.username);
@@ -53,10 +75,18 @@ export const postTask = async (payload: {developer: string, username: string, em
   return res.message;
 }
 
-export const patchTask = async (payload: {id: number, developer: string, token: string, text: string, status: number}): Promise<{token: string}> => {
-  const homeAddress = 'https://uxcandy.com/~shapoval/test-task-backend/v2/edit/'
-  const devQuery = `${payload.id}?developer=${payload.developer}`;
-  const finalAddress = homeAddress + devQuery;
+interface PatchTaskPayload {
+  id: number,
+  developerName: string,
+  token: string,
+  text: string,
+  status: number
+}
+
+export const patchTask = async (payload: PatchTaskPayload): Promise<any> => {
+  const endpoint = address + 'edit/'
+  const devQuery = `${payload.id}?developer=${payload.developerName}`;
+  const finalAddress = endpoint + devQuery;
 
   const form = new FormData();
   form.append("token", payload.token);

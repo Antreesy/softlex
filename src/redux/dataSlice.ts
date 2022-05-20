@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Info, SortDir, SortField } from '../interfaces/interfaces'
 
-interface DataState extends Info {
+export interface DataState extends Info {
   current_page: number,
   sort_field: SortField | undefined,
   sort_dir: SortDir | undefined,
   developerName: string,
-  modifiedId: number,
 }
 
 const initialState: DataState = {
@@ -16,7 +15,6 @@ const initialState: DataState = {
   sort_field: undefined,
   sort_dir: undefined,
   developerName: 'Max',
-  modifiedId: 0,
 }
 
 export const dataSlice = createSlice({
@@ -41,15 +39,9 @@ export const dataSlice = createSlice({
         state.sort_dir = undefined;
       }
     },
-    setModify: (state, action: PayloadAction<number>) => {
-      state.modifiedId = action.payload;
-    },
-    resetModify: (state) => {
-      state.modifiedId = 0;
-    },
   },
 })
 
-export const { setData, setPage, setSort, setModify, resetModify } = dataSlice.actions
+export const { setData, setPage, setSort } = dataSlice.actions
 
 export default dataSlice.reducer

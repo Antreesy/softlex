@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { setData } from "../../redux/dataSlice";
+import { DataState, setData } from "../../redux/dataSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import { getData, postTask } from "../../api/fetch";
@@ -7,16 +7,16 @@ import { validateEmail } from "../../helpers/validation";
 
 import style from "./taskcreate.module.css";
 
-const TaskCreate = (props: {developer: string}) => {
+const TaskCreate = (props: {data: DataState}) => {
+  const { developerName, current_page, sort_field, sort_dir } = props.data;
   const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [text, setText] = useState<string>('')
   const [error, setError] = useState<string>('')
-  const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
   const refreshData = () => {
-    getData({developer: data.developerName, page: data.current_page, sort_field: data.sort_field, sort_direction: data.sort_dir})
+    getData({developerName, current_page, sort_field, sort_dir})
     .then((res) => dispatch(setData(res)))
   }
 
@@ -50,7 +50,7 @@ const TaskCreate = (props: {developer: string}) => {
       return;
     }
     
-    postTask({developer: props.developer, username, email, text })
+    postTask({developerName, username, email, text })
     .then(refreshData)
 
     setUsername('');

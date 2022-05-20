@@ -10,13 +10,6 @@ export enum SortDir {
   desc = "desc",
 }
 
-export interface QueryParams {
-  developer: string;
-  sort_field?: SortField;
-  sort_direction?: SortDir;
-  page?: number;
-}
-
 export interface TaskInfo {
   email: string;
   id: number;
