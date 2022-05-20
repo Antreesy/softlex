@@ -1,0 +1,42 @@
+.sort_wrapper {
+  display: flex;
+}
+
+.button_wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.button {
+  padding: 8px 13px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  outline: none;
+  color: var(--color-border);
+  background-color: #fff;
+}
+
+.button:not(:last-child) {
+  margin-right: 15px;
+}
+
+.button:hover {
+  border-color: var(--color-border);
+}
+
+.button.active.asc {
+  background-color: var(--color-green);
+}
+.button.active.desc {
+  background-color: var(--color-red);
+}
+
+.text {
+  margin-right: 15px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-border);
+}

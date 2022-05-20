@@ -1,0 +1,144 @@
+.task__wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 10px 20px;
+  
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 5px 5px 10px #aaa;
+  font-size: 24px;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 180px;
+  width: fit-content;
+  margin-right: 8px;
+  border-right: 1px solid grey;
+}
+
+.image {
+  width: 80px;
+  height: 80px;
+  border-radius: 25%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.email {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.text {
+  font-size: 24px;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.text_input {
+  width: 50%;
+  margin-right: 15px;
+  padding: 5px;
+  font-size: 24px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  border-bottom-color: var(--color-grey);
+  color: #000;
+  background-color: transparent;
+  outline: none;
+}
+.text_input:placeholder {
+  color: var(--color-grey);
+}
+.text_input:hover,
+.text_input:focus {
+  border-bottom-color: var(--color-border);
+}
+
+.status {
+  position: relative;
+  margin-left: auto;
+  margin-right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  border: 3px solid var(--color-green);
+  background-color: transparent;
+}
+
+.status.checked {
+  background-color: var(--color-green);
+}
+.status.checked::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 12px;
+  border-left: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  transform: rotate(-45deg);
+}
+
+.status_edited {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-grey);
+}
+
+.button_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button_edit {
+  width: 70px;
+  padding: 8px 13px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  outline: none;
+  background-color: var(--color-red);
+}
+.button_edit:hover {
+  border-color: var(--color-border);
+}
+
+.button_save {
+  width: 70px;
+  padding: 8px 13px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  outline: none;
+  background-color: var(--color-blue);
+}
+.button_save:hover {
+  border-color: var(--color-border);
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+}

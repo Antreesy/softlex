@@ -1,0 +1,43 @@
+.button_wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.button {
+  padding: 8px 13px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  outline: none;
+  color: var(--color-border);
+  background-color: #fff;
+}
+
+.button:not(:last-child) {
+  margin-right: 15px;
+}
+
+.button:hover {
+  border-color: var(--color-border);
+}
+
+.button:disabled {
+  background-color: var(--color-grey);
+  cursor: auto;
+}
+.button:disabled:hover {
+  border-color: var(--color-grey);
+}
+
+.button.active {
+  background-color: var(--color-red);
+}
+
+.span {
+  margin-right: 15px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-border);
+}
