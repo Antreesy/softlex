@@ -21,5 +21,5 @@ export interface TaskInfo {
 
 export interface Info {
   tasks: TaskInfo[];
-  total_task_count: string; 
+  total_task_count: string;
 }

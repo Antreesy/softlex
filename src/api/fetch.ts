@@ -1,6 +1,6 @@
 import { Info, SortDir, SortField } from "../interfaces/interfaces";
 
-const address = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
+const address = "https://uxcandy.com/~shapoval/test-task-backend/v2/";
 
 export interface GetDataPayload {
   developerName: string;
@@ -10,18 +10,18 @@ export interface GetDataPayload {
 }
 
 export const getData = async (payload: GetDataPayload): Promise<Info> => {
-  const endpoint = address + ''
+  const endpoint = `${address}`;
   const devQuery = `?developer=${payload.developerName}`;
-  const sortParamQuery = `&sort_field=${payload.sort_field}` || '';
-  const sortDirectQuery = `&sort_direction=${payload.sort_dir}` || '';
-  const sortPageQuery = `&page=${payload.current_page}` || '';
+  const sortParamQuery = `&sort_field=${payload.sort_field}` || "";
+  const sortDirectQuery = `&sort_direction=${payload.sort_dir}` || "";
+  const sortPageQuery = `&page=${payload.current_page}` || "";
 
   const finalAddress = endpoint + devQuery + sortParamQuery + sortDirectQuery + sortPageQuery;
 
-  const res = await fetch(finalAddress).then((res) => res.json())
-  
+  const res = await fetch(finalAddress).then((resp) => resp.json());
+
   return res.message;
-}
+};
 
 interface AuthUserPayload {
   developerName: string,
@@ -30,7 +30,7 @@ interface AuthUserPayload {
 }
 
 export const authUser = async (payload: AuthUserPayload): Promise<{token: string}> => {
-  const endpoint = address + 'login/'
+  const endpoint = `${address}login/`;
   const devQuery = `?developer=${payload.developerName}`;
   const finalAddress = endpoint + devQuery;
 
@@ -40,13 +40,13 @@ export const authUser = async (payload: AuthUserPayload): Promise<{token: string
 
   const options = {
     method: "POST",
-    body: form
-  }
+    body: form,
+  };
 
-  const res = await fetch(finalAddress, options).then((res) => res.json())
-  
+  const res = await fetch(finalAddress, options).then((resp) => resp.json());
+
   return res.message;
-}
+};
 
 interface PostTaskPayload {
   developerName: string,
@@ -56,7 +56,7 @@ interface PostTaskPayload {
 }
 
 export const postTask = async (payload: PostTaskPayload): Promise<any> => {
-  const endpoint = address + 'create/'
+  const endpoint = `${address}create/`;
   const devQuery = `?developer=${payload.developerName}`;
   const finalAddress = endpoint + devQuery;
 
@@ -67,13 +67,13 @@ export const postTask = async (payload: PostTaskPayload): Promise<any> => {
 
   const options = {
     method: "POST",
-    body: form
-  }
+    body: form,
+  };
 
-  const res = await fetch(finalAddress, options).then((res) => res.json())
-  
+  const res = await fetch(finalAddress, options).then((resp) => resp.json());
+
   return res.message;
-}
+};
 
 interface PatchTaskPayload {
   id: number,
@@ -84,7 +84,7 @@ interface PatchTaskPayload {
 }
 
 export const patchTask = async (payload: PatchTaskPayload): Promise<any> => {
-  const endpoint = address + 'edit/'
+  const endpoint = `${address}edit/`;
   const devQuery = `${payload.id}?developer=${payload.developerName}`;
   const finalAddress = endpoint + devQuery;
 
@@ -95,10 +95,10 @@ export const patchTask = async (payload: PatchTaskPayload): Promise<any> => {
 
   const options = {
     method: "POST",
-    body: form
-  }
+    body: form,
+  };
 
-  const res = await fetch(finalAddress, options).then((res) => res.json())
-  
+  const res = await fetch(finalAddress, options).then((resp) => resp.json());
+
   return res.message;
-}
+};

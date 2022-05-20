@@ -7,31 +7,31 @@ import { authUser } from "../../api/fetch";
 
 import style from "./header.module.css";
 
-const Header = () => {
+function Header() {
   const auth = useAppSelector((state) => state.auth);
   const developerName = useAppSelector((state) => state.data.developerName);
-  const [username, setUsername] = useState<string>(auth.username)
-  const [password, setPassword] = useState<string>('')
+  const [username, setUsername] = useState<string>(auth.username);
+  const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
 
   const onChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value)
-  }
+    setUsername(event.target.value);
+  };
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
-  }
+    setPassword(event.target.value);
+  };
 
   const signIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
-    authUser({developerName, username, password})
-      .then((res) => dispatch(setToken(res.token)))
-      dispatch(setUser(username))
-  }
+
+    authUser({ developerName, username, password })
+      .then((res) => dispatch(setToken(res.token)));
+    dispatch(setUser(username));
+  };
 
   const signOut = () => {
-    dispatch(resetToken())
-  }
+    dispatch(resetToken());
+  };
 
   return (
     <header className={style.header}>
@@ -68,7 +68,7 @@ const Header = () => {
         )}
       </div>
     </header>
-  )
+  );
 }
 
 export default Header;
